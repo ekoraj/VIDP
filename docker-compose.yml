@@ -1,0 +1,30 @@
+version: "3.8"
+
+services:
+  downscale:
+    build: .
+    volumes:
+      - ./script:/VIDP/script
+      - ./input:/VIDP/input
+      - ./data:/VIDP/data
+    command: python script/downscale.py
+
+  language:
+    build: .
+    volumes:
+      - ./script:/VIDP/script
+      - ./input:/VIDP/input
+      - ./data:/VIDP/data
+    depends_on:
+      - downscale
+    command: sh -c 'while [ ! -f /VIDP/data/output_240p.mp4 ] || [ ! -f /VIDP/data/output_360p.mp4 ] || [ ! -s /VIDP/data/output_240p.mp4 ] || [ ! -s /VIDP/data/output_360p.mp4 ] || ! ffmpeg -v error -i /VIDP/data/output_240p.mp4 -f null - 2>/dev/null || ! ffmpeg -v error -i /VIDP/data/output_360p.mp4 -f null - 2>/dev/null; do sleep 1; done && python script/language.py'
+
+  translate:
+    build: .
+    volumes:
+      - ./script:/VIDP/script
+      - ./input:/VIDP/input
+      - ./data:/VIDP/data
+    depends_on:
+      - language
+    command: sh -c 'while [ ! -f /VIDP/data/output_240p.mp4 ] || [ ! -f /VIDP/data/output_360p.mp4 ] || [ ! -s /VIDP/data/output_240p.mp4 ] || [ ! -s /VIDP/data/output_360p.mp4 ] || [ ! -f /VIDP/data/lang-detect/output_240p.mp4_langue.txt ] || [ ! -f /VIDP/data/lang-detect/output_360p.mp4_langue.txt ] || [ ! -s /VIDP/data/lang-detect/output_240p.mp4_langue.txt ] || [ ! -s /VIDP/data/lang-detect/output_360p.mp4_langue.txt ]; do sleep 1; done && python script/translate.py'
