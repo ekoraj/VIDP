@@ -1,47 +1,40 @@
+Here's a concise breakdown of the VIDP project setup and overview:
 
-################Comment demarrer VIDP
-#docker-compose build #construire les containers
-#docker-compose up # démarrer les containers
-#######################################
-VideoP: Pipeline Hybride de Traitement Vidéo
-Description du Projet
-VideoP est un pipeline automatisé de traitement vidéo qui traite les médias localement, génère des métadonnées, et centralise les résultats dans le cloud.
-Architecture et Composants
-Pipeline Local (Pods)
+## How to Start VIDP
+1. Install Docker (visit official site)
+2. `docker-compose build` (build containers)
+3. `docker-compose up` (start containers)
+4. Note: Project specializes in French video translation
 
-Downscale Pod: Compression et redimensionnement des vidéos
-LangIdent Pod: Détection de la langue parlée
-Subtitle Pod: Génération automatique des sous-titres
-Animal Detect Pod: Identification des animaux dans les vidéos
+## VideoP: Hybrid Video Processing Pipeline
 
-Infrastructure Cloud
+### Project Description
+A modular video processing pipeline using containers to:
+- Process videos locally
+- Generate metadata
+- Centralize results in cloud
+- Provide public web access
 
-Traitement sur instances EC2
-Équilibrage de charge
-Stockage:
+### Key Components
+**Local Processing Pods:**
+- Downscale Pod: Video compression/resizing
+- LangIdent Pod: Language detection
+- Subtitle Pod: Subtitle generation
 
-Résultats dans Amazon S3
-Métadonnées dans DynamoDB
+**Cloud Infrastructure:**
+- EC2 instances with load balancing
+- Storage: 
+  - Amazon S3 for results
+  - DynamoDB for metadata
 
+**User Interface:**
+- Apache2-hosted web page
+- Video and metadata visualization
 
+### Deliverables
+- Compressed videos
+- Metadata (languages, subtitles, animal detection)
+- Original video preservation
+- User-friendly web interface for data access
 
-Interface Utilisateur
-
-Page web hébergée sur Apache2
-Visualisation des vidéos et métadonnées
-
-Résultats
-Livrables
-
-Vidéos compressées
-Métadonnées (langue, sous-titres, animaux)
-Vidéos originales
-Interface web de consultation
-
-Objectifs
-
-Centralisation sécurisée des données
-Accessibilité et exploration facile des contenus
-######################
-Le projet peut sous titrer correctement les videos en francais!!!!
-
+The pipeline aims to automate video processing, making multimedia content more accessible and manageable.
